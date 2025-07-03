@@ -8,6 +8,7 @@
   - [Tainacan Hooks](es-mx/dev/hooks.md "Tainacan Hooks - Tainacan Wiki")
     - [Acciones](es-mx/dev/actions.md "Acciones PHP Tainacan - Tainacan Wiki")
     - [Filtros](es-mx/dev/filters.md "Filtros PHP y Javascript de Tainacan - Tainacan Wiki")
+  - [Arquitectura](es-mx/dev/arquitectura.md "arquitectura técnica de Tainacan")
   - [:link: API de JSON](https://redocly.github.io/redoc/?url=https://github.com/tainacan/tainacan-wiki/raw/master/dev/openapi.json ":ignore")
   - [Roles y capacidades](es-mx/dev/roles-capabilities.md "Documentación para desarrolladores Funciones y capacidades - Tainacan Wiki")
 - Más sobre el desarrollo de plugins
