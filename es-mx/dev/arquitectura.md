@@ -20,25 +20,25 @@ La siguiente tabla muestra las principales entidades del sistema, sus respectivo
 
 | Entidad                            | Repositorio                                | Ubicación del Código                      |
 | ---------------------------------- | ------------------------------------------ | ----------------------------------------- |
-| Collection (`tainacan-collection`) | `Tainacan\Repositories\Collections`        | `class-tainacan-collections.php`          |
-| Item (`tainacan-item`)             | `Tainacan\Repositories\Items`              | `class-tainacan-items.php`                |
-| Metadatum (`tainacan-metadatum`)   | `Tainacan\Repositories\Metadata`           | `class-tainacan-metadata.php`             |
-| Metadata Section                   | `Tainacan\Repositories\Metadata_Sections`  | `class-tainacan-metadata-sections.php`    |
-| Filter                             | `Tainacan\Repositories\Filters`            | `class-tainacan-filters.php`              |
-| Taxonomy                           | `Tainacan\Repositories\Taxonomies`         | `class-tainacan-taxonomies.php`           |
-| Term                               | `Tainacan\Repositories\Terms`              | `class-tainacan-terms.php`                |
+| Colección (`tainacan-collection`) | `Tainacan\Repositories\Collections`        | `class-tainacan-collections.php`          |
+| Ítem (`tainacan-item`)             | `Tainacan\Repositories\Items`              | `class-tainacan-items.php`                |
+| Metadato (`tainacan-metadatum`)   | `Tainacan\Repositories\Metadata`           | `class-tainacan-metadata.php`             |
+| Sección de Metadatos                   | `Tainacan\Repositories\Metadata_Sections`  | `class-tainacan-metadata-sections.php`    |
+| Filtro                             | `Tainacan\Repositories\Filters`            | `class-tainacan-filters.php`              |
+| Taxonomía                           | `Tainacan\Repositories\Taxonomies`         | `class-tainacan-taxonomies.php`           |
+| Término                               | `Tainacan\Repositories\Terms`              | `class-tainacan-terms.php`                |
 
 ### 1.2 Ubicaciones Detalladas del Código de Entidades
 
 | Entidad           | Archivo (Ruta)                                                |
 | ----------------- | ------------------------------------------------------------- |
-| Collection        | `src/classes/entities/class-tainacan-collection.php`          |
-| Item              | `src/classes/entities/class-tainacan-item.php`                |
-| Metadatum         | `src/classes/entities/class-tainacan-metadatum.php`           |
-| Metadata Section  | `src/classes/entities/class-tainacan-metadata-section.php`    |
-| Filter            | `src/classes/entities/class-tainacan-filter.php`              |
-| Taxonomy          | `src/classes/entities/class-tainacan-taxonomy.php`            |
-| Term              | `src/classes/entities/class-tainacan-term.php`                |
+| Colección        | `src/classes/entities/class-tainacan-collection.php`          |
+| Ítem              | `src/classes/entities/class-tainacan-item.php`                |
+| Metadato         | `src/classes/entities/class-tainacan-metadatum.php`           |
+| Sección de Metadatos  | `src/classes/entities/class-tainacan-metadata-section.php`    |
+| Filtro            | `src/classes/entities/class-tainacan-filter.php`              |
+| Taxonomía          | `src/classes/entities/class-tainacan-taxonomy.php`            |
+| Término              | `src/classes/entities/class-tainacan-term.php`                |
 
 ## 2. REST API
 
@@ -81,7 +81,7 @@ curl -X GET "https://yourdomain.com/wp-json/tainacan/v2/collection/1/items"
 
 ## 3. Integración Frontend ⇄ Backend ⇄ Base de Datos
 
-El panel administrativo de Tainacan está desarrollado principalmente como una Single Page Application, donde toda la obtención y manipulación de datos se realiza a través de la REST API. Ciclos de obtención similares también ocurren dentro de los Bloques Gutenberg, como la Búsqueda Facetada y el Formulario de Envío de Ítem.
+El panel administrativo de Tainacan está desarrollado principalmente como una Aplicación de Página Única, donde toda la obtención y manipulación de datos se realiza a través de la REST API. Ciclos de obtención similares también ocurren dentro de los Bloques Gutenberg, como la Búsqueda Facetada y el Formulario de Envío de Ítem.
 
 ### 3.1 Ciclo de Solicitud
 
@@ -154,66 +154,74 @@ Tainacan cuenta con una estructura flexible para la importación y exportación 
 
 ## 6. Arquitectura del Frontend
 
-El frontend de Tainacan es una aplicación Vue.js 3 que proporciona una interfaz para la gestión de repositorios digitales. Está implementado como una Single Page Application (SPA), utilizando Vue.js 3, con enrutamiento gestionado por Vue Router y gestión de estado mediante Vuex. Se comunica con el backend a través de la REST API de Tainacan.
+El frontend de Tainacan es una aplicación Vue.js 3 que proporciona una interfaz para gestionar repositorios digitales. Está implementada como una Aplicación de Página Única (SPA) utilizando Vue.js 3, con enrutamiento gestionado por Vue Router y manejo de estado mediante Vuex. Se comunica con el backend a través de la API REST de Tainacan.
 
-Una característica clave del frontend es la búsqueda facetada, que permite a los usuarios explorar intuitivamente la colección combinando múltiples filtros mediante componentes interactivos. Se implementa mediante una interfaz con **paneles de filtros interactivos**, que ofrecen tipos de control como casillas de verificación, campos de texto y selectores de fecha.
+Como SPA, Tainacan carga solo una única página HTML inicial y actualiza dinámicamente el contenido mientras el usuario navega, sin recargar la página completa. Esto ofrece una experiencia de usuario más fluida y rápida. Una característica clave del frontend es la búsqueda facetada, que permite explorar intuitivamente las colecciones combinando múltiples filtros mediante componentes interactivos que actualizan los resultados en tiempo real. Esta funcionalidad se implementa a través de una interfaz con **paneles de filtros interactivos**, que ofrecen controles como casillas de verificación (checkboxes), campos de texto y selectores de fecha, adaptados al tipo de dato que se filtra.
+
+Este documento presenta el diagrama de flujo de enrutamiento y gestión de datos de la Aplicación de Página Única (SPA) de Tainacan, mostrando cómo ocurren la inicialización, el enrutamiento y el flujo de datos entre componentes.
 
 ![Initialization and Routing Flowchart](/es-mx/dev/_assets/initialization_routing_front.png)
 
 ### 6.1 Ubicaciones de Archivos
 
-- `/src/views/admin/` – Interfaz administrativa principal
-- `/src/views/gutenberg-blocks/` – Bloques para el editor Gutenberg
+Los archivos del frontend se encuentran principalmente en:
+
+- `/src/views/admin/` - Interfaz administrativa principal
+- `/src/views/gutenberg-blocks/` - Bloques para el editor Gutenberg de WordPress
 
 ### 6.2 Componentes Principales
 
 #### 6.2.1 Página Principal
 
-`src/views/admin/admin.vue` inicializa la app Vue y define el layout:
+El componente principal de la aplicación es `src/views/admin/admin.vue`. Inicializa la aplicación Vue y define el diseño principal, incluyendo:
 
-- Menú lateral
-- Encabezado
+- Menú de navegación lateral
+- Cabecera
 - Área de contenido principal
 - Gestión de rutas
 
 #### 6.2.2 Sistema de Enrutamiento
 
-Definido en `src/views/admin/js/router.js`, con Vue Router:
+El sistema de enrutamiento se define en `src/views/admin/js/router.js`. Utiliza Vue Router para gestionar la navegación entre las diferentes pantallas de la aplicación.
 
-**Rutas principales**:
+Grupos principales de rutas:
 
-- `/home` – Inicio
-- `/collections` – Colecciones
-- `/items` – Ítems
-- `/metadata` – Metadatos
-- `/filters` – Filtros
-- `/taxonomies` – Taxonomías
-- `/activities` – Actividades
-- `/capabilities` – Permisos
-- `/importers` – Importadores
-- `/exporters` – Exportadores
+**Páginas a nivel de repositorio**:
+   - `/home` - Página de inicio
+   - `/collections` - Lista de colecciones
+   - `/items` - Lista de ítems del repositorio
+   - `/metadata` - Metadatos del repositorio
+   - `/filters` - Filtros del repositorio
+   - `/taxonomies` - Taxonomías
+   - `/activities` - Actividades del repositorio
+   - `/capabilities` - Permisos del repositorio
+   - `/importers` - Herramientas de importación
+   - `/exporters` - Herramientas de exportación
 
 ### 6.3 Organización
 
-- `/src/views/admin/pages/home-page.vue`
-- `/src/views/admin/pages/lists/`
-- `/src/views/admin/pages/singles/`
-- Componentes en `/src/views/admin/components/`:
+Las páginas de la aplicación están organizadas y ubicadas en:
 
-  - `/navigation/`
-  - `/edition/`
-  - `/search/`
-  - `/other/`
+- `/src/views/admin/pages/home-page.vue` - Página de inicio
+- `/src/views/admin/pages/lists/` - Páginas de listado (colecciones, ítems, etc.)
+- `/src/views/admin/pages/singles/` - Páginas de detalle (colección, ítem, etc.)
+
+Los componentes reutilizables se encuentran en `/src/views/admin/components/`, organizados por funcionalidad:
+
+- `/navigation/` - Componentes de navegación (menús, migas de pan, etc.)
+- `/edition/` - Formularios de edición
+- `/search/` - Componentes de búsqueda y filtrado
+- `/other/` - Componentes varios
 
 ### 6.4 Gestión de Estado
 
-Vuex se utiliza para manejar el estado:
+Tainacan utiliza Vuex para la gestión centralizada del estado. Los módulos principales del estado incluyen:
 
-- **Collection**
-- **Item**
-- **Search**
-- **Filter**
-- **Metadata**
+- **Collection**: Estado relacionado con la colección actual
+- **Item**: Estado relacionado con el ítem actual
+- **Search**: Estado relacionado con búsquedas y filtrado
+- **Filter**: Estado relacionado con los filtros disponibles
+- **Metadata**: Estado relacionado con los metadatos disponibles
 
 ## 7. Referencias y Contribución
 
